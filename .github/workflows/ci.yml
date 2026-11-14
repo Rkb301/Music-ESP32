@@ -1,0 +1,29 @@
+name: Validate Spotify prototype
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Audit production dependencies
+        run: npm audit --omit=dev
+      - name: Check server syntax
+        run: node --check server.js
+      - name: Check serverless function syntax
+        run: |
+          for file in functions/*.js; do node --check "$file"; done
