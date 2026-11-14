@@ -1,1 +1,19 @@
+# Local secrets (never commit actual values)
+.env
+.env.*
+!.env.example
+
+# Dependencies / build artifacts
+node_modules/
+dist/
+build/
+coverage/
+.netlify/
+
+# Local tooling
 .vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
